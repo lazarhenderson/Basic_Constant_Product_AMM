@@ -57,7 +57,7 @@ contract CPAMM {
         tokenIn.transferFrom(msg.sender, address(this), _amountIn);
 
         // Calculate tokenOut including 0.3% fee
-        // Formula: y*dx / (x + dx) = dy   =>   y = tokenOut reserve | dx = _amountIn (incl. fee) from user | x = tokenIn reserve
+        // Formula: y*dx / (x + dx) = dy ... dy = tokenOut reserve | x = _amountIn (incl. fee) from user | dx = tokenIn reserve
         uint amountInWithFee = (_amountIn * 997) / 1000; // 0.3%
         amountOut = (reserveOut * amountInWithFee) / (reserveIn + amountInWithFee);
 
@@ -84,13 +84,40 @@ contract CPAMM {
         }
 
         // Mint shares
+        // Calculate liquidity by getting the sqrt of x * y || liquidity = sqrt(xy)
+        // Shares to mint = dx / x * T = dy / y * T ... x = _amount0 | dx = reserve0 | T = total_shares | y = _amount1 | dy = reserve1
+        if (totalSupply == 0) {
+            shares = _sqrt(_amount0 * _amount1);
+        } else {
+            shares = _min( (_amount0 * totalSupply) / reserve0, (_amount1 * totalSupply) / reserve1 );
+        }
+        require(shares > 0, "Shares = 0");
+        _mint(msg.sender, shares);
 
         // Update reserves
+        _update(token0.balanceOf(address(this)), token1.balanceOf(address(this)));
     }
 
     // Remove liquidity from pool - user removes liquidity of both tokens including earned fees
     function removeLiquidity() external {}
 
+    // Calculate square root
+    function _sqrt(uint y) private pure returns (uint z) {
+        if (y > 3) {
+            z = y;
+            uint x = y / 2 + 1;
+            while (x < z) {
+                z = x;
+                x = (y / x + x) / 2;
+            }
+        } else if (y != 0) {
+            z = 1;
+        }
+    }
 
+    function _min(uint x, uint y) private pure returns (uint) {
+        // If x smaller than y then choose x, if not, choose y
+        return x <= y ? x : y;
+    }
 
 }
