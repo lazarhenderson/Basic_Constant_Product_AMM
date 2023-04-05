@@ -31,15 +31,62 @@ contract CPAMM {
 
     // This will burn shares from a user
     function _burn(address _from, uint _amount) private {
-        balanceOf[_from] -= _amount; // mint shares and increase balance of user
-        totalSupply -= _amount; // increment the total supply
+        balanceOf[_from] -= _amount; // burn shares and decrease balance of user
+        totalSupply -= _amount; // decrement the total supply
+    }
+
+    // Update the reserves of tokens after swap, addLiquidity & removeLiquidity
+    function _update(uint _reserve0, uint _reserve1) private {
+        reserve0 = _reserve0;
+        reserve1 = _reserve1;
     }
 
     // Perform a swap between tokens in pool
-    function swap() external {}
+    function swap(address _tokenIn, uint _amountIn) external returns(uint amountOut) {
+        require(_tokenIn == address(token0) || _tokenIn == address(token1), "Invalid token in");
+        require(_amountIn > 0, "Amount in must be greater than 0");
+
+        // Determine if tokenIn is token0 or not
+        bool isToken0 = _tokenIn == address(token0);
+
+        // Determine tokenIn, tokenOut, reserveIn, reserveOut
+        (IERC20 tokenIn, IERC20 tokenOut, uint reserveIn, uint reserveOut) = isToken0 
+            ? (token0, token1, reserve0, reserve1) : (token1, token0, reserve1, reserve0);
+
+        // Transfer tokenIn from user
+        tokenIn.transferFrom(msg.sender, address(this), _amountIn);
+
+        // Calculate tokenOut including 0.3% fee
+        // Formula: y*dx / (x + dx) = dy   =>   y = tokenOut reserve | dx = _amountIn (incl. fee) from user | x = tokenIn reserve
+        uint amountInWithFee = (_amountIn * 997) / 1000; // 0.3%
+        amountOut = (reserveOut * amountInWithFee) / (reserveIn + amountInWithFee);
+
+        // Transfer tokenOut to msg.sender
+        tokenOut.transfer(msg.sender, amountOut);
+        
+        // Update the reserves:
+        // Done internally to prevent users from sending token0/token1 to pool and manipulating balances
+        // If token0/token1 balances are manipulated it can mess up the swaps and the amount of shares to mint/burn
+        _update(token0.balanceOf(address(this)), token1.balanceOf(address(this)));
+    }
 
     // Add liquidity to pool - user adds liquidity of both tokens and earn fees
-    function addLiquidity() external {}
+    function addLiquidity(uint _amount0, uint _amount1) external returns(uint shares) {
+
+        // Get token0 and token1 from user
+        token0.transferFrom(msg.sender, address(this), _amount0);
+        token1.transferFrom(msg.sender, address(this), _amount1);
+
+        // Ensure the liquidity added does not change the price of token0 & token1
+        // Formula: dy / dx = y / x
+        if (reserve0 > 0 || reserve1 > 0) {
+            require(reserve0 * _amount1 == reserve1 * _amount0, "Liquidity added is not allowed to change token prices");
+        }
+
+        // Mint shares
+
+        // Update reserves
+    }
 
     // Remove liquidity from pool - user removes liquidity of both tokens including earned fees
     function removeLiquidity() external {}
