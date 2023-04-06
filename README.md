@@ -14,7 +14,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#2-adding-liquidity-to-pool">Adding liquidity to pool</a></li>
+    <li><a href="#adding-liquidity-to-pool">Adding liquidity to pool</a></li>
     <li><a href="#2-naive-receiver">Naive receiver</a></li>
   </ol>
 
@@ -27,7 +27,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 - Gas efficient reserves call like UniswapV2 LP's
 - Events for Approval, Transfer, Liquidity Add, Liquidity Removal, Swap, Reserves Update
 
-## 2-Adding liquidity to pool
+## Adding liquidity to pool
 
 ```shell
 function addLiquidity(uint _amount0, uint _amount1) external returns(uint shares)
