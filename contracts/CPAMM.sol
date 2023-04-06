@@ -93,7 +93,6 @@ contract CPAMM {
         token0.transfer(msg.sender, amount0);
         token1.transfer(msg.sender, amount1);
         
-
     }
 
     // Perform a swap between tokens in pool
