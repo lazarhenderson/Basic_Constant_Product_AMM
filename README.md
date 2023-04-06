@@ -15,6 +15,7 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 
 ```shell
 ### If liquidity in pool is greater than 0
+#   x = amount0_added | y = amount1_added | dx = reserve0 | dy = reserve1 | T = total_shares
 - Shares to mint based on token0 = dx / x * T
 - Shares to mint based on token1 = dy / y * T
 ```
