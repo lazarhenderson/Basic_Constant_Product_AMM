@@ -12,7 +12,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 
 <!-- TABLE OF CONTENTS -->
 
-  <title>Table of Contents</title>
+  <summary>Table of Contents</summary>
   <ol>
     <li><a href="#what-can-be-added-to-contract">What can be added to contract</a></li>
     <li><a href="#adding-liquidity-to-pool">Adding liquidity to pool</a></li>
