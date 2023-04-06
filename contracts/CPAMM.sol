@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-// Imports ERC20
-import "./IERC20.sol";
+// Imports IERC20
+import "./interface/IERC20.sol";
 
 contract CPAMM {
 
