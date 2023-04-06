@@ -19,7 +19,7 @@ describe("CPAMM Test", async function () {
     this.cpamm = await cpamm.deployed();
   });
 
-  it("Ensure Token0 & Token1 Sent To Wallet", async function () {
+  it("Ensure Token0 & Token1 Sent To Liquidity Provider Wallet", async function () {
     this.amount1 = 1000;
     this.amount2 = 500;
     await this.token0.mint(this.liquidityProvider.address, this.amount1);
@@ -33,7 +33,7 @@ describe("CPAMM Test", async function () {
     ).to.equal(this.amount2);
   });
 
-  it("Approve CPAMM to transfer tokens0/1 from liquidityProvider.address", async function () {
+  it("Approve CPAMM to transfer token0/1 from liquidityProvider", async function () {
     const token0_contract = new ethers.Contract(
       this.token0.address, // token address
       token0_abi, // token ABI
@@ -61,7 +61,7 @@ describe("CPAMM Test", async function () {
     );
   });
 
-  it("Add liquidity to CPAMM", async function () {
+  it("Add liquidity to CPAMM from liquidityProvider", async function () {
     await this.cpamm.addLiquidity(this.amount1, this.amount2, {
       from: this.liquidityProvider.address,
     });
