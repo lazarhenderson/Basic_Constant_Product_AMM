@@ -10,6 +10,14 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 
 [See Contract File](contracts/CPAMM.sol)
 
+<!-- TABLE OF CONTENTS -->
+
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#1-adding-liquidity-to-pool">Adding liquidity to pool</a></li>
+    <li><a href="#2-naive-receiver">Naive receiver</a></li>
+  </ol>
+
 #### What can be added to contract
 
 - Contract owner
@@ -67,3 +75,22 @@ First the LP checks the balance of token0 and token1 inside the pool. The amount
 ```
 
 A require statement is then put in place to ensure that liquidity being removed is greater than 0. Shares are then burned/removed from the user and total supply in LP. Reserves of token0 and token1 are updated and the liquidity share of token0 & token1 including trading fees are sent to the user.
+
+## To Test the CP AMM Contract
+
+To test this, you can download or clone this repository and do the following:
+
+```shell
+# Install Hardhat:
+npm i -D hardhat
+
+# Run this and click enter 4 times:
+npx hardhat
+
+# Install dependencies:
+npm install --save-dev @nomicfoundation/hardhat-chai-matchers
+npm i -D @nomiclabs/hardhat-waffle
+
+# Run the test file using:
+npx hardhat test test/cpamm_test.js
+```
