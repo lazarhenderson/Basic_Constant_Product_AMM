@@ -4,7 +4,7 @@ Here I've built a basic Constant Product AMM liquidity pool that is able to host
 
 [See Contract File](contracts/CPAMM.sol)
 
-### What can be added to contract
+#### What can be added to contract
 
 - Contract owner
 - A minimum liquidity
@@ -37,7 +37,7 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 
 If shares are greater than 0, then the LP mints the shares to the user and reserve0 and reserve1 are updated at the end of the function.
 
-### What can be added to function:
+#### What can be added to function:
 
 - Mint fee
 - Event of minting
