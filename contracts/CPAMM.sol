@@ -35,7 +35,7 @@ contract CPAMM {
         totalSupply -= _amount; // decrement the total supply
     }
 
-    // Update the reserves of tokens after swap, addLiquidity & removeLiquidity
+    // Update the reserves of tokens after each addLiquidity, removeLiquidity & swap function call
     function _update(uint _reserve0, uint _reserve1) private {
         reserve0 = _reserve0;
         reserve1 = _reserve1;
