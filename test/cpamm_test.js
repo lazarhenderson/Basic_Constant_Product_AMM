@@ -21,15 +21,18 @@ describe("CPAMM Test", function () {
     const amount = 1000;
     await token0.mint(signer.address, amount);
     await token1.mint(signer.address, amount);
+    expect(await token0.balanceOf(signer.address)).to.equal(amount);
+    expect(await token1.balanceOf(signer.address)).to.equal(amount);
 
-    // Approve the CPAMM to transferFrom token0
-    // Approve the CPAMM to transferFrom token1
+    // Approve the CPAMM to transferFrom signer.address
+    // Approve the CPAMM to transferFrom signer.address
     // Mint token0 & token1 to CPAMM
 
     console.log("tokenContractOwner: ", await token0.owner());
     console.log("token totalSupply: ", await token0.totalSupply());
 
-    // Here I need to check balanceOf token0 & token1
-    // expect(await token.balanceOf(cpamm.address)).to.equal(amount);
+    // Here I need to check balanceOf token0 & token1 in CPAMM
+    // expect(await token0.balanceOf(cpamm.address)).to.equal(amount);
+    // expect(await token1.balanceOf(cpamm.address)).to.equal(amount);
   });
 });
