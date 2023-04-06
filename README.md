@@ -23,7 +23,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 ## What Functionality Can Be Added To Contract
 
 - Contract owner
-- A minimum liquidity
+- Minimum liquidity amount
 - Cumulative prices of token0 & token1
 - Re-entrancy modifiers
 - Gas efficient reserves call like UniswapV2 LP's
