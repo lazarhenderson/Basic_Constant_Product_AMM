@@ -61,5 +61,3 @@ First the LP checks the balance of token0 and token1 inside the pool. The amount
 ```
 
 A require statement is then put in place to ensure that liquidity being removed is greater than 0. Shares are then burned/removed from the user and total supply in LP. Reserves of token0 and token1 are updated and the liquidity share of token0 & token1 including trading fees are sent to the user.
-
-Test
