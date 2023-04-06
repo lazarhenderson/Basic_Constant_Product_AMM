@@ -14,11 +14,13 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 
   <summary>Table of Contents</summary>
   <ol>
+    <li><a href="#what-can-be-added-to-contract">What can be added to contract</a></li>
     <li><a href="#adding-liquidity-to-pool">Adding liquidity to pool</a></li>
-    <li><a href="#2-naive-receiver">Naive receiver</a></li>
+    <li><a href="#removing-liquidity-from-pool">Removing liquidity from pool</a></li>
+    <li><a href="#to-test-the-cp-amm-contract">Test the CP AMM Contract</a></li>
   </ol>
 
-#### What can be added to contract
+## What can be added to contract
 
 - Contract owner
 - A minimum liquidity
@@ -76,7 +78,7 @@ First the LP checks the balance of token0 and token1 inside the pool. The amount
 
 A require statement is then put in place to ensure that liquidity being removed is greater than 0. Shares are then burned/removed from the user and total supply in LP. Reserves of token0 and token1 are updated and the liquidity share of token0 & token1 including trading fees are sent to the user.
 
-## To Test the CP AMM Contract
+## Test the CP AMM Contract
 
 To test this, you can download or clone this repository and do the following:
 
