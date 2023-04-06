@@ -11,7 +11,7 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 - Shares to mint = sqrt of (amount0_added * amount1_added)
 ```
 
-### or
+#### or
 
 ```shell
 ### If liquidity in pool is greater than 0
@@ -21,3 +21,10 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 ```
 
 If shares are greater than 0, then the LP mints the shares to the user and reserve0 and reserve1 are updated at the end of the function.
+
+### What can be added to function:
+
+- Mint fee
+- Event of minting
+
+## Removing liquidity from pool
