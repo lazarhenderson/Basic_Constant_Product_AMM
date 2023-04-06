@@ -14,13 +14,13 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#what-functionality-can-be-added-to-contract">What functionality can be added to contract</a></li>
-    <li><a href="#adding-liquidity-to-pool">Adding liquidity to pool</a></li>
-    <li><a href="#removing-liquidity-from-pool">Removing liquidity from pool</a></li>
-    <li><a href="#to-test-the-cp-amm-contract">Test the CP AMM Contract</a></li>
+    <li><a href="#what-functionality-can-be-added-to-contract">What Functionality Can Be Added To Contract</a></li>
+    <li><a href="#adding-liquidity-to-pool">Adding Liquidity To Pool</a></li>
+    <li><a href="#removing-liquidity-from-pool">Removing Liquidity From Pool</a></li>
+    <li><a href="#to-test-the-cp-amm-contract">Test The CP AMM Contract</a></li>
   </ol>
 
-## What functionality can be added to contract
+## What Functionality Can Be Added To Contract
 
 - Contract owner
 - A minimum liquidity
@@ -29,7 +29,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 - Gas efficient reserves call like UniswapV2 LP's
 - Events for Approval, Transfer, Liquidity Add, Liquidity Removal, Swap, Reserves Update
 
-## Adding liquidity to pool
+## Adding Liquidity To Pool
 
 ```shell
 function addLiquidity(uint _amount0, uint _amount1) external returns(uint shares)
@@ -58,7 +58,7 @@ If shares are greater than 0, then the LP mints the shares to the user and reser
 - Mint fee
 - Event of minting
 
-## Removing liquidity from pool
+## Removing Liquidity From Pool
 
 ```shell
 function removeLiquidity(uint _shares) external returns(uint amount0, uint amount1)
@@ -78,7 +78,7 @@ First the LP checks the balance of token0 and token1 inside the pool. The amount
 
 A require statement is then put in place to ensure that liquidity being removed is greater than 0. Shares are then burned/removed from the user and total supply in LP. Reserves of token0 and token1 are updated and the liquidity share of token0 & token1 including trading fees are sent to the user.
 
-## Test the CP AMM Contract
+## Test The CP AMM Contract
 
 To test this, you can download or clone this repository and do the following:
 
