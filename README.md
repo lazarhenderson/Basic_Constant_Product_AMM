@@ -17,7 +17,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
     <li><a href="#what-functionality-can-be-added-to-contract">What Functionality Can Be Added To Contract</a></li>
     <li><a href="#adding-liquidity-to-pool">Adding Liquidity To Pool</a></li>
     <li><a href="#removing-liquidity-from-pool">Removing Liquidity From Pool</a></li>
-    <li><a href="#to-test-the-cp-amm-contract">Test The CP AMM Contract</a></li>
+    <li><a href="#test-the-cp-amm-contract">Test The CP AMM Contract</a></li>
   </ol>
 
 ## What Functionality Can Be Added To Contract
