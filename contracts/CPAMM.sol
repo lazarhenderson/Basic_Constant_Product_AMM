@@ -2,7 +2,7 @@
 pragma solidity ^0.8.9;
 
 // Imports IERC20
-import "./interface/IERC20.sol";
+import "../interfaces/IERC20.sol";
 
 contract CPAMM {
 
