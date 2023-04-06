@@ -25,7 +25,7 @@ The reserves of token0 & token1 are controlled internally by the addLiquidity, r
 - Contract owner
 - Minimum liquidity amount
 - Cumulative prices of token0 & token1
-- Re-entrancy modifiers
+- Re-entrancy modifier
 - Gas efficient reserves call like UniswapV2 LP's
 - Events for Approval, Transfer, Liquidity Add, Liquidity Removal, Swap, Reserves Update
 
