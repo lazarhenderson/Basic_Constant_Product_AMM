@@ -41,6 +41,61 @@ contract CPAMM {
         reserve1 = _reserve1;
     }
 
+    // Add liquidity to pool - user adds liquidity of both tokens and earn fees
+    function addLiquidity(uint _amount0, uint _amount1) external returns(uint shares) {
+
+        // Ensure the liquidity added does not change the price of token0 & token1
+        // Formula: dy / dx = y / x
+        if (reserve0 > 0 || reserve1 > 0) {
+            require(reserve0 * _amount1 == reserve1 * _amount0, "Liquidity added is not allowed to change token prices");
+        }
+
+        // Get token0 and token1 from user
+        token0.transferFrom(msg.sender, address(this), _amount0);
+        token1.transferFrom(msg.sender, address(this), _amount1);
+
+        // Mint shares
+        // Calculate liquidity by getting the sqrt of x * y || liquidity = sqrt(xy)
+        // Shares to mint = dx / x * T = dy / y * T ... x = _amount0 | dx = reserve0 | T = total_shares | y = _amount1 | dy = reserve1
+        if (totalSupply == 0) {
+            shares = _sqrt(_amount0 * _amount1);
+        } else {
+            shares = _min( (_amount0 * totalSupply) / reserve0, (_amount1 * totalSupply) / reserve1 );
+        }
+        require(shares > 0, "Shares = 0");
+        _mint(msg.sender, shares);
+
+        // Update reserves
+        _update(token0.balanceOf(address(this)), token1.balanceOf(address(this)));
+    }
+
+    // Remove liquidity from pool - user removes liquidity of both tokens including earned fees
+    function removeLiquidity(uint _shares) external returns(uint amount0, uint amount1) {
+
+        // Amount0 and Amount1 to withdraw
+        // dx = s / T * x ... dx = token0 | s = shares | T = totalShares | x = reserve0
+        // dy = s / T * y ... dy = token1 | s = shares | T = totalShares | y = reserve1
+        uint bal0 = token0.balanceOf(address(this));
+        uint bal1 = token1.balanceOf(address(this));
+        // dx = (s * x) / T --- formula re-arranged slightly
+        amount0 = (_shares * bal0) / totalSupply;
+        // dy = (s * y) / T --- formula re-arranged slightly
+        amount1 = (_shares * bal1) / totalSupply;
+        require(amount0 > 0 && amount1 > 0, "Liquidity error, ensure _shares is correct");
+
+        // Burn shares
+        _burn(msg.sender, _shares);
+
+        // Update reserves
+        _update(bal0 - amount0, bal1 - amount1);
+
+        // Transfer tokens to msg.sender
+        token0.transfer(msg.sender, amount0);
+        token1.transfer(msg.sender, amount1);
+        
+
+    }
+
     // Perform a swap between tokens in pool
     function swap(address _tokenIn, uint _amountIn) external returns(uint amountOut) {
         require(_tokenIn == address(token0) || _tokenIn == address(token1), "Invalid token in");
@@ -70,37 +125,6 @@ contract CPAMM {
         _update(token0.balanceOf(address(this)), token1.balanceOf(address(this)));
     }
 
-    // Add liquidity to pool - user adds liquidity of both tokens and earn fees
-    function addLiquidity(uint _amount0, uint _amount1) external returns(uint shares) {
-
-        // Get token0 and token1 from user
-        token0.transferFrom(msg.sender, address(this), _amount0);
-        token1.transferFrom(msg.sender, address(this), _amount1);
-
-        // Ensure the liquidity added does not change the price of token0 & token1
-        // Formula: dy / dx = y / x
-        if (reserve0 > 0 || reserve1 > 0) {
-            require(reserve0 * _amount1 == reserve1 * _amount0, "Liquidity added is not allowed to change token prices");
-        }
-
-        // Mint shares
-        // Calculate liquidity by getting the sqrt of x * y || liquidity = sqrt(xy)
-        // Shares to mint = dx / x * T = dy / y * T ... x = _amount0 | dx = reserve0 | T = total_shares | y = _amount1 | dy = reserve1
-        if (totalSupply == 0) {
-            shares = _sqrt(_amount0 * _amount1);
-        } else {
-            shares = _min( (_amount0 * totalSupply) / reserve0, (_amount1 * totalSupply) / reserve1 );
-        }
-        require(shares > 0, "Shares = 0");
-        _mint(msg.sender, shares);
-
-        // Update reserves
-        _update(token0.balanceOf(address(this)), token1.balanceOf(address(this)));
-    }
-
-    // Remove liquidity from pool - user removes liquidity of both tokens including earned fees
-    function removeLiquidity() external {}
-
     // Calculate square root
     function _sqrt(uint y) private pure returns (uint z) {
         if (y > 3) {
@@ -115,6 +139,7 @@ contract CPAMM {
         }
     }
 
+    // Choose the min amount of either "dx / x * T" or "dy / y * T" shares
     function _min(uint x, uint y) private pure returns (uint) {
         // If x smaller than y then choose x, if not, choose y
         return x <= y ? x : y;
