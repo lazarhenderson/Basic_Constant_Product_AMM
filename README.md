@@ -11,7 +11,7 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 - Shares to mint for first time liquidity supply = sqrt of (amount0 added \* amount1 added)
 ```
 
-or
+### or
 
 ```shell
 ### If liquidity in pool is greater than 0
