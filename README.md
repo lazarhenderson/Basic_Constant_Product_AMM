@@ -8,7 +8,7 @@ In order to add liquidity to the pool, users will first approve the LP to spend 
 
 ```shell
 ### If liquidity in pool is equal to 0
-- Shares to mint = sqrt of (amount0 added \* amount1 added)
+- Shares to mint = sqrt of (amount0_added * amount1_added)
 ```
 
 ### or
