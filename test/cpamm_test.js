@@ -82,4 +82,10 @@ describe("CPAMM Test", async function () {
     console.log("       CPAMM reserve0: ", await this.cpamm.reserve0());
     console.log("       CPAMM reserve1: ", await this.cpamm.reserve1());
   });
+
+  // Do token swaps
+
+  // Test is liquidityProvider made profit
+
+  // Remove liquidity from pool
 });
