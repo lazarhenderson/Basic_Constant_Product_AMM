@@ -111,8 +111,8 @@ contract CPAMM {
         tokenIn.transferFrom(msg.sender, address(this), _amountIn);
 
         // Calculate tokenOut including 0.3% fee
-        // Formula: y*dx / (x + dx) = dy ... dy = tokenOut reserve | x = _amountIn (incl. fee) from user | dx = tokenIn reserve
         uint amountInWithFee = (_amountIn * 997) / 1000; // 0.3%
+        // Formula: dy = (y * dx) / (x + dx) ... dy = tokenOut amount | y = reserveOut | x = reserveIn | dx = amountInWithFee
         amountOut = (reserveOut * amountInWithFee) / (reserveIn + amountInWithFee);
 
         // Transfer tokenOut to msg.sender
