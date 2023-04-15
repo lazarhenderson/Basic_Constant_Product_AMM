@@ -98,7 +98,19 @@ Finally, the reserves are updated with the user's swap effect on tokens.
 
 ## Test The CPAMM Contract
 
-To test this, you can download or clone this repository and do the following:
+First ensure you have Node.js installed, you can see if you have it installed by using the following command line prompt to see your Node.js version:
+
+```shell
+# Command Prompt (Windows)
+node -- version
+
+# Terminal (Mac)
+node -v
+```
+
+If no Node.js version is shown then it's not installed. Click on the following link for Node.js's download page: [Node.js Download](https://nodejs.org/en/download)
+
+Once you have Node.js installed, you can download or clone this repository and do the following:
 
 ```shell
 # Install Hardhat:
